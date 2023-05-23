@@ -1,0 +1,101 @@
+@import "src/styles/colors";
+
+.reviews-list-container {
+  align-items: center;
+  display: flex;
+  gap: 10px;
+  height: 228px;
+  min-height: 228px;
+  padding: 0 20px;
+  position: relative;
+}
+
+.hidden {
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.reviews-list {
+  align-items: flex-start;
+  display: flex;
+  flex: 1;
+  gap: 20px;
+  height: 100%;
+}
+
+.review-card {
+  background-color: $color-additional;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  font-size: 16px;
+  gap: 16px;
+  height: 100%;
+  justify-content: space-between;
+  max-width: 450px;
+  padding: 16px;
+  position: relative;
+}
+
+.author {
+  color: $color-secondary;
+  font-weight: 600;
+}
+
+.text-container {
+  align-items: flex-start;
+  display: flex;
+  flex: 1;
+  justify-content: flex-start;
+}
+
+.text {
+  -webkit-box-orient: vertical;
+  color: $color-text;
+  display: -webkit-box;
+  -webkit-line-clamp: 6;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
+}
+
+.date {
+  color: $color-additional-text;
+}
+
+.additional-info {
+  align-items: center;
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.rating {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+}
+
+.good {
+  color: $color-success;
+}
+
+.bad {
+  color: $color-validation;
+}
+
+.no-reviews {
+  color: $color-additional-text;
+  font-size: 16px;
+  padding-left: 80px;
+}
+
+.review-dialog-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 100%;
+  width: 100%;
+}

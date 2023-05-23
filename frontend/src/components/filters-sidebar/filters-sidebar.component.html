@@ -1,0 +1,78 @@
+<div class="filters-panel">
+  <div class="filters-header">
+    <div>Filters</div>
+    <button tuiIconButton appearance="icon" icon="tuiIconCloseLarge" (click)="close.emit()"></button>
+  </div>
+
+  <div class="filters-content">
+    <form class="filters-form" [formGroup]="filtersForm">
+      <div class="form-control-container tui-space_vertical-4">
+        <tui-select class="b-form" formControlName="type">
+          Content type
+          <ng-template tuiDataList>
+            <tui-data-list>
+              <button *ngFor="let item of types" tuiOption [value]="item">
+                {{ item }}
+              </button>
+            </tui-data-list>
+          </ng-template>
+        </tui-select>
+      </div>
+
+      <div class="form-control-container tui-space_vertical-4">
+        <tui-select formControlName="genre">
+          Genre
+          <app-searchable-select *tuiDataList [items]="genreFilterValues$"></app-searchable-select>
+        </tui-select>
+      </div>
+
+      <div class="form-control-container tui-space_vertical-4">
+        <tui-select formControlName="country">
+          Country
+          <app-searchable-select *tuiDataList [items]="countryFilterValues$"></app-searchable-select>
+        </tui-select>
+      </div>
+
+      <div class="form-control-container tui-space_vertical-4">
+        <tui-input-number formControlName="ratingFrom" [min]="0" [max]="10" [tuiTextfieldCleaner]="true">
+          Minimal rating
+          <input tuiTextfield placeholder="Type a number from 0 to 10"/>
+        </tui-input-number>
+      </div>
+
+      <div class="form-control-container tui-space_vertical-4">
+        <tui-input-number formControlName="ratingTo" [min]="0" [max]="10" [tuiTextfieldCleaner]="true">
+          Maximal rating
+          <input tuiTextfield placeholder="Type a number from 0 to 10"/>
+        </tui-input-number>
+      </div>
+
+      <div class="form-control-container tui-space_vertical-4">
+        <tui-input-year class="b-form"
+                        [min]="1895"
+                        [max]="2030"
+                        formControlName="yearFrom"
+                        [tuiTextfieldCleaner]="true">
+          Minimal year
+          <input tuiTextfield placeholder="Choose a year"/>
+        </tui-input-year>
+      </div>
+
+      <div class="form-control-container tui-space_vertical-4">
+        <tui-input-year class="b-form"
+                        [min]="1895"
+                        [max]="2030"
+                        formControlName="yearTo"
+                        [tuiTextfieldCleaner]="true">
+          Maximal year
+          <input tuiTextfield placeholder="Choose a year"/>
+        </tui-input-year>
+      </div>
+    </form>
+  </div>
+
+  <div class="filter-buttons">
+    <button tuiButton size="l" shape="rounded" (click)="applyFilters()">Apply</button>
+    <button tuiButton appearance="flat" size="l" shape="rounded" (click)="close.emit()">Cancel</button>
+  </div>
+</div>

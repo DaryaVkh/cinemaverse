@@ -1,0 +1,32 @@
+<button tuiButton
+        appearance="outline"
+        shape="rounded"
+        size="m"
+        (click)="openReviewFormDialog()">
+  Leave a review
+</button>
+
+<ng-template [tuiDialogOptions]="{label: 'Leave a review for «' + (movie.nameEn || movie.nameOriginal || movie.nameRu) + '»', size: 'm'}"
+             [(tuiDialog)]="reviewFormOpen">
+  <form class="review-form tui-space_top-6" [formGroup]="reviewForm" (submit)="submitReview($event)">
+    <div class="form-control-container">
+      <label [tuiLabel]="label">
+        <tui-rating class="rating" [max]="10" formControlName="rating"></tui-rating>
+      </label>
+      <tui-error *ngIf="ratingError" [error]="ratingError"></tui-error>
+
+      <ng-template #label>
+        Rating
+      </ng-template>
+    </div>
+
+    <div class="form-control-container textarea-container">
+      <tui-text-area class="text" formControlName="text" [pseudoInvalid]="submitted && !!textError">
+        Type your impressions
+      </tui-text-area>
+      <tui-error *ngIf="textError" [error]="textError"></tui-error>
+    </div>
+
+    <button tuiButton shape="rounded" size="l" type="submit">Leave a review</button>
+  </form>
+</ng-template>

@@ -1,0 +1,22 @@
+<form class="dialog-content tui-space_top-6"
+      [formGroup]="authorizationForm"
+      [appLoader]="loading$ | async"
+      (submit)="submitForm($event)">
+  <tui-error *ngIf="loginError$ | async" class="tui-space_bottom-4" [error]="loginError"></tui-error>
+
+  <div class="form-control-container tui-space_bottom-2">
+    <tui-input formControlName="email" [pseudoInvalid]="submitted && !(loginError$ | async) && !!emailError">
+      Email
+    </tui-input>
+    <tui-error *ngIf="emailError" [error]="emailError"></tui-error>
+  </div>
+  <div class="form-control-container tui-space_bottom-2">
+    <tui-input-password formControlName="password" [pseudoInvalid]="submitted && !(loginError$ | async) && !!passwordError">
+      Password
+    </tui-input-password>
+    <tui-error *ngIf="passwordError" [error]="passwordError"></tui-error>
+  </div>
+  <button class="submit-button tui-space_bottom-4" type="submit" tuiButton size="l" shape="rounded">
+    Sign In
+  </button>
+</form>

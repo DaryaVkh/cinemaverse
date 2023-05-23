@@ -1,0 +1,39 @@
+<h1 class="page-title">My Favorite Movies</h1>
+
+<ng-container *ngIf="movies$ | async as movies">
+  <div *ngIf="movies.length; else noFavorite" class="movies-container">
+    <div *ngFor="let movie of movies" class="movie-card">
+      <img class="movie-poster"
+           [src]="movie.posterUrlPreview"
+           [alt]="movie.nameEn || movie.nameRu"
+           [routerLink]="['/', 'movie-page', movie.kinopoiskId]">
+      <div class="movie-name-container">
+        <div class="movie-name" [routerLink]="['/', 'movie-page', movie.kinopoiskId]">
+          {{movie.nameEn || movie.nameRu || movie.nameOriginal}}
+        </div>
+        <tui-svg class="favorite-icon"
+                 [tuiHint]="removeTooltip"
+                 src="tuiIconHeartLarge"
+                 (click)="removeFromFavorites(movie.kinopoiskId)">
+        </tui-svg>
+      </div>
+      <tui-badge *ngIf="movie.ratingKinopoisk"
+                 status="primary"
+                 class="rating-badge"
+                 [value]="movie.ratingKinopoisk.toFixed(1)">
+      </tui-badge>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #noFavorite>
+  <div class="no-favorite">
+    You haven't added any favorite movie yet :(
+  </div>
+</ng-template>
+
+<app-loader *ngIf="loading$ | async"></app-loader>
+
+<ng-template #removeTooltip>
+  <div>Remove movie from favorites</div>
+</ng-template>

@@ -1,0 +1,144 @@
+@import "src/styles/colors";
+
+:host {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+  width: 100%;
+}
+
+.page-container {
+  display: flex;
+  flex: 1;
+  gap: 40px;
+  min-height: 0;
+  padding: 30px 80px;
+  position: relative;
+  width: 100%;
+}
+
+.person-photo {
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 16px;
+  max-width: 350px;
+  width: 350px;
+}
+
+.person-info-container {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 40px;
+  justify-content: flex-start;
+}
+
+.person-name {
+  color: $color-text;
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 32px;
+}
+
+.person-info {
+  display: flex;
+  font-size: 16px;
+  gap: 30px;
+}
+
+.info-title {
+  color: $color-additional-text;
+  flex: 1;
+}
+
+.info-value {
+  flex: 2;
+}
+
+.person-additional-info {
+  display: flex;
+  flex: 2;
+  flex-direction: column;
+  gap: 40px;
+  margin-top: 72px;
+}
+
+.additional-info-value {
+  flex: 5;
+  line-height: 24px;
+}
+
+.person-movies {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  margin: 60px 0;
+}
+
+.movies-title {
+  font-size: 20px;
+  font-weight: 400;
+  padding-left: 80px;
+}
+
+.movies-list {
+  align-items: center;
+  display: flex;
+  gap: 16px;
+}
+
+.hidden {
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.movies {
+  align-items: stretch;
+  display: flex;
+  flex: 1;
+  gap: 30px;
+}
+
+.person-movie-card {
+  align-items: center;
+  border: $color-text 1px solid;
+  border-radius: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  margin-bottom: 16px;
+  max-width: 270px;
+  min-height: 350px;
+  padding: 20px 30px;
+  width: 270px;
+
+  .info-row {
+    display: flex;
+    font-size: 16px;
+    gap: 20px;
+    width: 100%;
+  }
+
+  .info-title {
+    color: $color-additional-text;
+    flex: 1;
+  }
+
+  .info-value {
+    color: $color-text;
+    flex: 1;
+  }
+}
+
+.movie-name {
+  color: $color-primary;
+  cursor: pointer;
+  font-family: Audiowide, sans-serif;
+  font-size: 24px;
+  line-height: 28px;
+  max-width: 100%;
+  text-align: center;
+  word-wrap: break-word;
+}

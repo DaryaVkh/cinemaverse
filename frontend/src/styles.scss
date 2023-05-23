@@ -1,0 +1,28 @@
+@import '@taiga-ui/core/styles/taiga-ui-local.scss';
+@import 'styles/colors';
+
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  background: $color-bg;
+  font-family: Lato, sans-serif !important;
+  font-size: 16px;
+  line-height: 1.5;
+  margin: 0;
+  padding: 0;
+}
+
+*, *::after, *::before {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: $color-primary;
+  cursor: pointer;
+  text-decoration: none;
+}

@@ -1,0 +1,14 @@
+<button tuiButton appearance="outline" shape="rounded" size="m" (click)="showLogin()">Sign In</button>
+
+<ng-template [tuiDialogOptions]="{label: 'Sign in with your account', size: 'm'}"
+             [(tuiDialog)]="loginDialogOpen">
+  <app-login (successfullyLogin)="loginDialogOpen = false"></app-login>
+  <div class="to-registration">
+    No account yet? <a (click)="registrationDialogOpen = true">Register</a>
+  </div>
+</ng-template>
+
+<ng-template [tuiDialogOptions]="{label: 'Registration', size: 'm'}"
+             [(tuiDialog)]="registrationDialogOpen">
+  <app-registration (successfullyRegister)="registrationDialogOpen = false"></app-registration>
+</ng-template>

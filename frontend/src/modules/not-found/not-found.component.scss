@@ -1,0 +1,125 @@
+@import '../../styles/colors';
+@import url('https://fonts.googleapis.com/css?family=Audiowide&display=swap');
+
+:host {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+}
+
+.not-found-text {
+  color: $color-primary;
+  font-family: Audiowide, sans-serif;
+  font-size: 36px;
+  font-weight: 300;
+  margin-top: 60px;
+  text-shadow: 0 0 4px #12000A;
+  text-transform: uppercase;
+}
+
+.svg-container {
+  height: 215px;
+  position: relative;
+  width: 600px;
+}
+
+.main-page-button {
+  margin-top: 60px;
+}
+
+#svgWrap_1,
+#svgWrap_2 {
+  height: auto;
+  left: 50%;
+  max-width: 100%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+}
+
+#id1_1,
+#id2_1,
+#id3_1 {
+  fill: transparent;
+  stroke: $color-primary;
+  stroke-width: 3px;
+}
+
+#id1_2,
+#id2_2,
+#id3_2 {
+  fill: transparent;
+  stroke: #12000A;
+  stroke-width: 3px;
+}
+
+#id3_1 {
+  animation: drawLine3 2.5s ease-in-out 0s forwards, flicker3 4s linear 4s infinite;
+  stroke-dasharray: 940px;
+  stroke-dashoffset: -940px;
+}
+
+#id2_1 {
+  animation: drawLine2 2.5s ease-in-out 0.5s forwards, flicker2 4s linear 4.5s infinite;
+  stroke-dasharray: 735px;
+  stroke-dashoffset: -735px;
+}
+
+#id1_1 {
+  animation: drawLine1 2.5s ease-in-out 1s forwards, flicker1 4s linear 5s infinite;
+  stroke-dasharray: 940px;
+  stroke-dashoffset: -940px;
+}
+
+@keyframes drawLine1 {
+  0%  {stroke-dashoffset: -940px;}
+  100%{stroke-dashoffset: 0;}
+}
+
+@keyframes drawLine2 {
+  0%  {stroke-dashoffset: -735px;}
+  100%{stroke-dashoffset: 0;}
+}
+
+@keyframes drawLine3 {
+  0%  {stroke-dashoffset: -940px;}
+  100%{stroke-dashoffset: 0;}
+}
+
+@keyframes flicker1{
+  0%  {stroke: $color-primary;}
+  1%  {stroke: transparent;}
+  3%  {stroke: transparent;}
+  4%  {stroke: $color-primary;}
+  6%  {stroke: $color-primary;}
+  7%  {stroke: transparent;}
+  13% {stroke: transparent;}
+  14% {stroke: $color-primary;}
+  100%{stroke: $color-primary;}
+}
+
+@keyframes flicker2{
+  0%  {stroke: $color-primary;}
+  50% {stroke: $color-primary;}
+  51% {stroke: transparent;}
+  61% {stroke: transparent;}
+  62% {stroke: $color-primary;}
+  100%{stroke: $color-primary;}
+}
+
+@keyframes flicker3{
+  0%  {stroke: $color-primary;}
+  1%  {stroke: transparent;}
+  10% {stroke: transparent;}
+  11% {stroke: $color-primary;}
+  40% {stroke: $color-primary;}
+  41% {stroke: transparent;}
+  45% {stroke: transparent;}
+  46% {stroke: $color-primary;}
+  100%{stroke: $color-primary;}
+}

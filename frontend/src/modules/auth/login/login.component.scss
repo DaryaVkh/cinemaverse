@@ -1,0 +1,17 @@
+.dialog-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+.form-control-container {
+  display: flex;
+  flex-direction: column;
+  height: 80px;
+  width: 80%;
+}
+
+.submit-button {
+  align-self: flex-start;
+}

@@ -1,0 +1,56 @@
+<div *ngIf="movies$ | async as movies" class="movies-list-container" [appLoader]="(loading$ | async) || (favoriteFilmsLoading$ | async)">
+  <ng-container *ngIf="moviesPart$ | async as moviesPart">
+    <button [class.hidden]="moviesPart === 1"
+            tuiIconButton
+            shape="rounded"
+            type="button"
+            appearance="icon"
+            icon="tuiIconChevronLeftLarge"
+            (click)="prevPart()">
+    </button>
+
+    <div class="movie-list">
+      <div *ngFor="let movie of movies | slice : (moviesPart - 1) * 7 : moviesPart * 7"
+           class="movie-preview-card">
+        <img class="movie-poster"
+             [src]="movie.posterUrlPreview"
+             [alt]="movie.nameEn || movie.nameRu"
+             [routerLink]="['/', 'movie-page', movie.filmId]">
+        <div class="movie-name-container">
+          <div class="movie-name" [routerLink]="['/', 'movie-page', movie.filmId]">
+            {{movie.nameEn || movie.nameRu}}
+          </div>
+          <tui-svg *ngIf="(user$ | async) && (favoriteMovies$ | async)"
+                   class="favorite-icon"
+                   [tuiHint]="checkIsMovieFavorite(movie.filmId) ? removeTooltip : addTooltip"
+                   [class.favorite]="checkIsMovieFavorite(movie.filmId)"
+                   src="tuiIconHeartLarge"
+                   (click)="changeFavoriteStatus(movie.filmId)">
+          </tui-svg>
+        </div>
+        <tui-badge status="primary"
+                   class="rating-badge"
+                   [value]="movie.rating">
+        </tui-badge>
+      </div>
+    </div>
+
+    <button [class.hidden]="moviesPart * 7 >= maxPagesCount"
+            tuiIconButton
+            shape="rounded"
+            type="button"
+            size="l"
+            appearance="icon"
+            icon="tuiIconChevronRightLarge"
+            (click)="nextPart()">
+    </button>
+  </ng-container>
+</div>
+
+<ng-template #removeTooltip>
+  <div>Remove movie from favorites</div>
+</ng-template>
+
+<ng-template #addTooltip>
+  <div>Add movie to favorites</div>
+</ng-template>

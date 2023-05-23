@@ -1,0 +1,16 @@
+.user-icon {
+  cursor: pointer;
+}
+
+.user-dropdown {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+  width: 220px;
+}
+
+.user-name {
+  align-self: center;
+  font-size: 20px;
+}

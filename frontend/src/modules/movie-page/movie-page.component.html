@@ -1,0 +1,178 @@
+<div *ngIf="movie$ | async as movie"
+     class="page-container">
+  <div *ngIf="movie.coverUrl" class="background" [style.background-image]="'url(' + movie.coverUrl || '' + ')'"></div>
+  <div class="movie-title">
+    <h1>{{movie.nameEn || movie.nameRu || movie.nameOriginal}}</h1>
+    <tui-svg *ngIf="(user$ | async) && (favoriteMovies$ | async)"
+             class="favorite-icon"
+             [tuiHint]="checkIsMovieFavorite(movie.kinopoiskId) ? removeTooltip : addTooltip"
+             [class.favorite]="checkIsMovieFavorite(movie.kinopoiskId)"
+             src="tuiIconHeartLarge"
+             (click)="changeFavoriteStatus(movie.kinopoiskId)">
+    </tui-svg>
+  </div>
+
+  <div class="upper-block">
+    <div class="left-block">
+      <div class="movie-info">
+        <img class="movie-poster" [src]="movie.posterUrl" [alt]="movie.nameEn || movie.nameRu || movie.nameOriginal">
+
+        <div class="rating-container">
+          <tui-tag class="rating-tag"
+                   size="l"
+                   status="primary"
+                   [hoverable]="true"
+                   [value]="movie.ratingKinopoisk?.toFixed(1) || '0.0'">
+          </tui-tag>
+          <span>Rating from Kinopoisk</span>
+        </div>
+
+        <div class="info-container">
+          <div class="horizontal-info">
+            <div class="info-column">
+              <span class="info-header">Year:</span>
+              <span class="info-data">{{(movie.year || movie.startYear) || '—'}}</span>
+            </div>
+
+            <div class="info-column" [style.flex]="2">
+              <span class="info-header">Country:</span>
+              <span class="info-data">{{movie.countries | countries}}</span>
+            </div>
+
+            <div class="info-column">
+              <span class="info-header">Time:</span>
+              <span class="info-data">{{movie.filmLength ? movie.filmLength + ' min' : '—'}}</span>
+            </div>
+          </div>
+
+          <div class="info-column">
+            <span class="info-header">Genre:</span>
+            <span class="info-data">{{movie.genres | genres}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="right-block">
+      <iframe *ngIf="movieTrailer$ | async as movieTrailer"
+              is="x-frame-bypass"
+              allowfullscreen
+              [src]="movieTrailer"
+              [style.flex]="1"
+              [style.height.px]="550"
+              [style.max-height.px]="550">
+      </iframe>
+
+      <div class="description">{{movie.description}}</div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="actors$ | async as actors" class="actors-list-container">
+  <h2 class="actors-title">Actors</h2>
+
+  <div class="actors-list" *ngIf="actorsPart$ | async as page">
+    <button [class.hidden]="page === 1"
+            tuiIconButton
+            shape="rounded"
+            type="button"
+            size="l"
+            appearance="icon"
+            icon="tuiIconChevronLeftLarge"
+            (click)="prevActorsPart()">
+    </button>
+
+    <div class="actors">
+      <div *ngFor="let actor of actors | slice : (page - 1) * actorsPerPage : page * actorsPerPage"
+           class="actor-preview-card" [routerLink]="['/', 'person-page', actor.staffId]">
+        <img class="actor-photo" [src]="actor.posterUrl" [alt]="actor.nameEn || actor.nameRu">
+        <span class="actor-name">{{actor.nameEn || actor.nameRu}}</span>
+        <span class="actor-character-name">{{actor.description}}</span>
+      </div>
+    </div>
+
+    <button [class.hidden]="page * actorsPerPage >= actors.length"
+            tuiIconButton
+            shape="rounded"
+            type="button"
+            size="l"
+            appearance="icon"
+            icon="tuiIconChevronRightLarge"
+            (click)="nextActorsPart(actors.length)">
+    </button>
+  </div>
+</div>
+
+<ng-container *ngIf="similarMovies$ | async as similar">
+  <div *ngIf="similar.length" class="similar-movies-container">
+    <h2 class="similar-movies-title">Similar movies you may like</h2>
+
+    <div *ngIf="similarMoviesPart$ | async as page" class="movies-list">
+      <button [class.hidden]="page === 1"
+              tuiIconButton
+              shape="rounded"
+              type="button"
+              size="l"
+              appearance="icon"
+              icon="tuiIconChevronLeftLarge"
+              (click)="prevSimilarPart()">
+      </button>
+
+      <div class="similar-movies">
+        <div *ngFor="let movie of similar | slice : (page - 1) * similarMoviesPerPage : page * similarMoviesPerPage"
+             class="movie-preview-card">
+          <img class="similar-movie-poster"
+               [src]="movie.posterUrl"
+               [alt]="movie.nameEn || movie.nameRu"
+               [routerLink]="['/', 'movie-page', movie.filmId]">
+
+          <div class="movie-name-container">
+            <div class="similar-movie-name" [routerLink]="['/', 'movie-page', movie.filmId]">
+              {{movie.nameEn || movie.nameRu}}
+            </div>
+            <tui-svg *ngIf="(user$ | async) && (favoriteMovies$ | async)"
+                     class="favorite-icon"
+                     [tuiHint]="checkIsMovieFavorite(movie.filmId) ? removeTooltip : addTooltip"
+                     [class.favorite]="checkIsMovieFavorite(movie.filmId)"
+                     src="tuiIconHeartLarge"
+                     (click)="changeFavoriteStatus(movie.filmId)">
+            </tui-svg>
+          </div>
+        </div>
+      </div>
+
+      <button [class.hidden]="page * similarMoviesPerPage >= similar.length"
+              tuiIconButton
+              shape="rounded"
+              type="button"
+              size="l"
+              appearance="icon"
+              icon="tuiIconChevronRightLarge"
+              (click)="nextSimilarPart(similar.length)">
+      </button>
+    </div>
+  </div>
+</ng-container>
+
+<div class="reviews-container" *ngIf="movie$ | async as movie">
+  <div class="reviews-title-container">
+    <h2 class="reviews-title">Reviews</h2>
+
+    <app-review-form *ngIf="user$ | async"
+                     [movie]="movie"
+                     (reviewSend)="reviewsUpdateTrigger$.next()">
+    </app-review-form>
+  </div>
+
+  <app-reviews-list [updateTrigger$]="reviewsUpdateTrigger$"></app-reviews-list>
+</div>
+
+<app-loader *ngIf="(loading$ | async) || (favoriteFilmsLoading$ | async)"></app-loader>
+
+<ng-template #removeTooltip>
+  <div>Remove movie from favorites</div>
+</ng-template>
+
+<ng-template #addTooltip>
+  <div>Add movie to favorites</div>
+</ng-template>

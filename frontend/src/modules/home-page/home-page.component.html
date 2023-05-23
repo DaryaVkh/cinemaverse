@@ -1,0 +1,88 @@
+<div class="premieres">
+  <ng-container *ngIf="premieres$ | async as movies">
+    <ng-container *ngIf="movies.length">
+      <button tuiIconButton
+              shape="rounded"
+              type="button"
+              appearance="mono"
+              size="xl"
+              icon="tuiIconChevronLeftLarge"
+              class="tui-space_right-4"
+              (click)="navigate(-1)">
+      </button>
+
+      <div class="carousel-container">
+        <tui-carousel class="carousel" [duration]="4000"
+                      [(index)]="visiblePremierIndex">
+          <ng-container *ngFor="let movie of movies">
+            <div *tuiItem class="movie" [routerLink]="['/', 'movie-page', movie.kinopoiskId]">
+              <div class="movie-background" [style.background-image]="'url(' + movie.posterUrl + ')'"></div>
+              <div class="poster-container">
+                <img class="poster" [src]="movie.posterUrlPreview" [alt]="movie.nameEn || movie.nameRu">
+                <div class="movie-info">
+                  <div class="movie-name">
+                    {{movie.nameEn || movie.nameRu}}
+                  </div>
+                  <div class="additional-info">
+                  <span>{{movie.year}}</span>
+                  <span>{{movie.genres | genres}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </tui-carousel>
+        <tui-pagination size="s"
+                        class="pagination"
+                        [length]="movies.length"
+                        [(index)]="visiblePremierIndex">
+        </tui-pagination>
+      </div>
+
+      <button tuiIconButton
+              shape="rounded"
+              size="xl"
+              type="button"
+              appearance="mono"
+              icon="tuiIconChevronRightLarge"
+              class="tui-space_left-4"
+              (click)="navigate(1)">
+      </button>
+    </ng-container>
+  </ng-container>
+</div>
+
+<div class="types">
+  <div class="type" [routerLink]="['..', 'movie-list']" [queryParams]="{type: filmsTypeEnum.TV_SERIES}">
+    <img class="type-image" src="assets/images/serials.jpeg" alt="serials">
+    <span class="type-text">Serials</span>
+  </div>
+  <div class="type" [routerLink]="['..', 'movie-list']" [queryParams]="{type: filmsTypeEnum.FILM}">
+    <img class="type-image" src="assets/images/movies.jpeg" alt="movies">
+    <span class="type-text">Movies</span>
+  </div>
+  <div class="type" [routerLink]="['..', 'movie-list']" [queryParams]="{type: filmsTypeEnum.TV_SHOW}">
+    <img class="type-image" src="assets/images/shows.jpeg" alt="shows">
+    <span class="type-text">TV Shows</span>
+  </div>
+</div>
+
+<div class="films-category-container">
+  <h2 class="category-header">Top-250 Best Films</h2>
+
+  <app-movie-list-preview [moviesType]="filmsTopTypeEnum.TOP_250_BEST_FILMS"></app-movie-list-preview>
+</div>
+
+<div class="films-category-container">
+  <h2 class="category-header">Top-100 Popular Films</h2>
+
+  <app-movie-list-preview [moviesType]="filmsTopTypeEnum.TOP_100_POPULAR_FILMS"></app-movie-list-preview>
+</div>
+
+<div class="films-category-container">
+  <h2 class="category-header">Top Await Films</h2>
+
+  <app-movie-list-preview [moviesType]="filmsTopTypeEnum.TOP_AWAIT_FILMS"></app-movie-list-preview>
+</div>
+
+<app-loader *ngIf="loading$ | async"></app-loader>

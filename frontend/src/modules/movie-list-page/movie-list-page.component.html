@@ -1,0 +1,48 @@
+<h1 *ngIf="type$ | async as type" class="page-title">{{getTitleByType(type)}}</h1>
+<h1 *ngIf="keyword$ | async as keyword; else filtersTitle" class="page-title">Search results for query «{{keyword}}»:</h1>
+<ng-template #filtersTitle>
+  <h1 *ngIf="!(type$ | async)" class="page-title">Search results:</h1>
+</ng-template>
+
+<div class="movies-container">
+  <div *ngFor="let movie of movies$ | async" class="movie-card">
+    <img class="movie-poster"
+         [src]="movie.posterUrlPreview"
+         [alt]="movie.nameEn || movie.nameRu"
+         [routerLink]="['/', 'movie-page', movie.kinopoiskId]">
+    <div class="movie-name-container">
+      <div class="movie-name" [routerLink]="['/', 'movie-page', movie.kinopoiskId]">
+        {{movie.nameEn || movie.nameRu || movie.nameOriginal}}
+      </div>
+      <tui-svg *ngIf="(user$ | async) && (favoriteMovies$ | async)"
+               class="favorite-icon"
+               [tuiHint]="checkIsMovieFavorite(movie.kinopoiskId) ? removeTooltip : addTooltip"
+               [class.favorite]="checkIsMovieFavorite(movie.kinopoiskId)"
+               src="tuiIconHeartLarge"
+               (click)="changeFavoriteStatus(movie.kinopoiskId)">
+      </tui-svg>
+    </div>
+    <tui-badge *ngIf="movie.ratingKinopoisk"
+               status="primary"
+               class="rating-badge"
+               [value]="movie.ratingKinopoisk.toFixed(1)">
+    </tui-badge>
+  </div>
+</div>
+
+<button *ngIf="page !== maxPagesCount"
+        class="load-movies-button"
+        tuiButton size="l"
+        (click)="nextPart()">
+  Load more movies
+</button>
+
+<app-loader *ngIf="(loading$ | async) || (favoriteFilmsLoading$ | async)"></app-loader>
+
+<ng-template #removeTooltip>
+  <div>Remove movie from favorites</div>
+</ng-template>
+
+<ng-template #addTooltip>
+  <div>Add movie to favorites</div>
+</ng-template>

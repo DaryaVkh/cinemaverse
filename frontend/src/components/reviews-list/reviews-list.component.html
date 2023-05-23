@@ -1,0 +1,76 @@
+<ng-container *ngIf="reviews$ | async as reviews">
+  <div *ngIf="reviews.length; else noReviews" class="reviews-list-container" [appLoader]="loading$ | async">
+    <ng-container *ngIf="reviewsPart$ | async as reviewsPart">
+      <button [class.hidden]="reviewsPart === 1"
+              tuiIconButton
+              shape="rounded"
+              type="button"
+              appearance="icon"
+              icon="tuiIconChevronLeftLarge"
+              (click)="prevPart()">
+      </button>
+
+      <div class="reviews-list">
+        <div *ngFor="let review of reviews | slice : (reviewsPart - 1) * reviewsPerPage : reviewsPart * reviewsPerPage"
+             class="review-card"
+             [tuiHint]="reviewHint"
+             tuiHintDirection="top"
+             (click)="dialogReview = review">
+          <span class="author">{{review.author}}</span>
+          <div class="text-container">
+          <span class="text">{{review.description}}</span>
+          </div>
+          <div class="additional-info">
+            <div class="date">{{review.createdAt | date : 'longDate'}}</div>
+            <div class="rating">
+              <tui-svg src="tuiIconThumbsUp" class="icon"></tui-svg>
+              <span
+                  [class.good]="review.positiveRating - review.negativeRating > 0"
+                  [class.bad]="review.positiveRating - review.positiveRating <= 0">
+                    {{review.positiveRating - review.positiveRating}}
+                  </span>
+              <tui-svg src="tuiIconThumbsDown" class="icon"></tui-svg>
+            </div>
+          </div>
+
+          <ng-template *ngIf="dialogReview" [tuiDialogOptions]="{label: dialogReview.author, size: 'm'}"
+                       [tuiDialog]="!!dialogReview" (tuiDialogChange)="dialogReview = null">
+            <div class="review-dialog-container">
+              <span class="dialog-text">{{dialogReview.description}}</span>
+              <div class="additional-info">
+                <div class="date">{{dialogReview.createdAt | date : 'longDate'}}</div>
+                <div class="rating">
+                  <tui-svg src="tuiIconThumbsUp" class="icon"></tui-svg>
+                  <span
+                      [class.good]="dialogReview.positiveRating - dialogReview.negativeRating > 0"
+                      [class.bad]="dialogReview.positiveRating - dialogReview.positiveRating <= 0">
+                    {{dialogReview.positiveRating - dialogReview.positiveRating}}
+                  </span>
+                  <tui-svg src="tuiIconThumbsDown" class="icon"></tui-svg>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+
+      <button [class.hidden]="reviewsPart * reviewsPerPage >= maxReviewsCount"
+              tuiIconButton
+              shape="rounded"
+              type="button"
+              size="l"
+              appearance="icon"
+              icon="tuiIconChevronRightLarge"
+              (click)="nextPart()">
+      </button>
+    </ng-container>
+  </div>
+</ng-container>
+
+<ng-template #noReviews>
+  <span *ngIf="!(loading$ | async)" class="no-reviews">This movie hasn't any reviews</span>
+</ng-template>
+
+<ng-template #reviewHint>
+  Click for read full review
+</ng-template>

@@ -1,0 +1,23 @@
+<tui-primitive-textfield #input
+                         tuiTextfieldIconLeft="tuiIconSearchLarge"
+                         class="tui-space_all-2"
+                         [tuiTextfieldLabelOutside]="true"
+                         [tuiTextfieldCleaner]="true"
+                         [(value)]="value"
+                         (keydown.arrowDown.prevent)="onArrowDown(list, $event)">
+  Search option
+</tui-primitive-textfield>
+<hr/>
+<tui-data-list #list
+               emptyContent="No results found"
+               (keydown)="onKeyDown($event.key, input.nativeFocusableElement)">
+  <ng-container *ngIf="items | async as options">
+    <tui-opt-group *tuiLet="options | tuiFilter : filter : value as filtered">
+      <button *ngFor="let option of filtered"
+              tuiOption
+              [value]="option">
+        {{ option }}
+      </button>
+    </tui-opt-group>
+  </ng-container>
+</tui-data-list>

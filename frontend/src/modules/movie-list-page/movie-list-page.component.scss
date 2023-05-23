@@ -1,0 +1,87 @@
+@import "src/styles/colors";
+
+:host {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+  padding: 0 80px;
+  position: relative;
+  width: 100%;
+}
+
+.page-title {
+  color: $color-text;
+  font-size: 36px;
+  font-weight: 600;
+  line-height: 38px;
+  margin: 40px 0;
+}
+
+.movies-container {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  gap: 20px;
+  row-gap: 35px;
+  width: 100%;
+}
+
+.movie-card {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 200px;
+}
+
+.rating-badge {
+  font-size: 18px;
+  font-weight: 600;
+  left: 10px;
+  position: absolute;
+  top: 10px;
+}
+
+.favorite-icon {
+  cursor: pointer;
+
+  &.favorite {
+    color: $color-validation;
+    fill: $color-validation;
+  }
+}
+
+.movie-poster {
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 8px;
+  cursor: pointer;
+  height: 300px;
+  margin-bottom: 16px;
+  max-height: 300px;
+  max-width: 100%;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+.movie-name-container {
+  align-items: flex-start;
+  display: flex;
+  gap: 5px;
+  justify-content: space-between;
+}
+
+.movie-name {
+  cursor: pointer;
+  font-size: 16px;
+  max-width: 100%;
+  word-wrap: break-word;
+}
+
+.load-movies-button {
+  align-self: center;
+  margin-top: 60px;
+  width: 30%;
+}

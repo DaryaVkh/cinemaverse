@@ -1,0 +1,36 @@
+<tui-hosted-dropdown tuiDropdownAlign="right"
+                     tuiDropdownHover
+                     [content]="userDropdown"
+                     [(open)]="openDropdown">
+  <tui-avatar class="user-icon tui-space_vertical-1"
+              new
+              [text]="user.name"
+              size="s"
+              [rounded]="true"
+              avatarUrl="tuiIconUser">
+  </tui-avatar>
+
+  <ng-template #userDropdown>
+    <div class="user-dropdown">
+      <span class="user-name">{{user.name}}</span>
+      <tui-data-list>
+        <tui-opt-group>
+          <button tuiOption [routerLink]="['/', 'my-favorites']">
+            Favorite movies
+            <tui-svg class="icon"
+                     src="tuiIconFilm">
+            </tui-svg>
+          </button>
+        </tui-opt-group>
+        <tui-opt-group>
+          <button tuiOption (click)="logout()">
+            Sign out
+            <tui-svg class="icon"
+                     src="tuiIconLogOut">
+            </tui-svg>
+          </button>
+        </tui-opt-group>
+      </tui-data-list>
+    </div>
+  </ng-template>
+</tui-hosted-dropdown>

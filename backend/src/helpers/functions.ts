@@ -1,0 +1,19 @@
+import * as crypto from 'crypto';
+import * as jose from 'jose';
+
+export const createSHA256 = (line: string, salt: string): string =>
+  crypto.createHmac('sha256', salt).update(line).digest('hex');
+
+export const createJWT = async (
+  algorithm: string,
+  jwtSecret: string,
+  payload: object,
+): Promise<string> =>
+  new jose.SignJWT({ ...payload })
+    .setProtectedHeader({ alg: algorithm })
+    .setIssuedAt()
+    .sign(new TextEncoder().encode(jwtSecret));
+
+export function delay(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}

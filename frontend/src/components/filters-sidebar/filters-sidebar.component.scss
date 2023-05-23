@@ -1,0 +1,69 @@
+@import "src/styles/colors";
+
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+}
+
+.filters-panel {
+  background-color: $color-bg;
+  border: 2px solid $color-primary;
+  border-right: none;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+  width: 500px;
+}
+
+.filters-header {
+  align-items: center;
+  background-color: $color-bg;
+  border-bottom: 1px solid $color-additional;
+  border-bottom: 1px solid #5A5A66;
+  display: flex;
+  font-size: 24px;
+  font-weight: 600;
+  justify-content: space-between;
+  left: 0;
+  padding: 10px 0 10px 20px;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+.filters-content {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  padding: 77px 10px;
+}
+
+.filters-form {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  width: 100%;
+}
+
+.form-control-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.filter-buttons {
+  background-color: $color-bg;
+  border-top: 1px solid #5A5A66;
+  bottom: 0;
+  display: flex;
+  gap: 16px;
+  left: 0;
+  padding: 10px 20px;
+  position: absolute;
+  width: 100%;
+  z-index: 1;
+}

@@ -1,0 +1,55 @@
+@use 'src/styles/colors' as *;
+
+.loader__background {
+  background-color: $color-bg;
+  bottom: 0;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 100%;
+  z-index: 10;
+}
+
+.loader__container {
+  left: 50vw;
+  position: fixed;
+  top: 50vh;
+  transform: translate(-50%, -50%);
+  z-index: 11;
+}
+
+.loader {
+  animation: rotate 2s linear infinite;
+  height: max(10vh, 80px);
+  transform-origin: center center;
+  width: max(10vh, 80px);
+
+  circle {
+    animation: dash 1.5s ease-in-out infinite;
+    stroke: $color-primary;
+    stroke-linecap: round;
+  }
+}
+
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes dash {
+  0% {
+    stroke-dasharray: 1, 150;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -35;
+  }
+  100% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -124;
+  }
+}

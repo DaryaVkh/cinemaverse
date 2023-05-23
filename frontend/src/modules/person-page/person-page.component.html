@@ -1,0 +1,103 @@
+<ng-container *ngIf="personInfo$ | async as personInfo">
+<div class="page-container">
+  <img class="person-photo" [src]="personInfo.posterUrl" [alt]="personInfo.nameEn || personInfo.nameRu">
+
+  <div class="person-info-container">
+    <h1 class="person-name">{{personInfo.nameEn || personInfo.nameRu}}</h1>
+
+    <div class="person-info">
+      <div class="info-title">Age</div>
+      <div class="info-value">{{personInfo.age}}</div>
+    </div>
+
+    <div class="person-info">
+      <div class="info-title">Sex</div>
+      <div class="info-value">{{personInfo.sex | lowercase}}</div>
+    </div>
+
+    <div class="person-info">
+      <div class="info-title">Date of birth</div>
+      <div class="info-value">{{personInfo.birthday | date : 'longDate'}}</div>
+    </div>
+
+    <div class="person-info">
+      <div class="info-title">Movies</div>
+      <div class="info-value">{{personInfo.films.length}}</div>
+    </div>
+
+    <div class="person-info">
+      <div class="info-title">Has awards</div>
+      <div class="info-value">{{personInfo.hasAwards ? 'Yes' : 'No'}}</div>
+    </div>
+
+    <div class="person-info">
+      <div class="info-title">Roles</div>
+      <div class="info-value">{{personInfo.profession}}</div>
+    </div>
+  </div>
+
+  <div class="person-additional-info">
+    <div class="person-info">
+      <div class="info-title">Birthplace</div>
+      <div class="additional-info-value">{{personInfo.birthplace}}</div>
+    </div>
+
+    <div *ngIf="personInfo.facts.length" class="person-info">
+      <div class="info-title">Facts</div>
+      <div class="additional-info-value">
+        <ul>
+          <li *ngFor="let fact of personInfo.facts">{{fact}}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="personInfo.films.length" class="person-movies">
+  <h2 class="movies-title">Movies with the actor's participant</h2>
+
+  <div *ngIf="moviesPart$ | async as page" class="movies-list">
+    <button [class.hidden]="page === 1"
+            tuiIconButton
+            shape="rounded"
+            type="button"
+            size="l"
+            appearance="icon"
+            icon="tuiIconChevronLeftLarge"
+            (click)="prevMoviesPart()">
+    </button>
+
+    <div class="movies">
+      <div *ngFor="let movie of personInfo.films | slice : (page - 1) * moviesPerPage : page * moviesPerPage"
+           class="person-movie-card">
+        <div class="info-row">
+          <div class="info-title">Role:</div>
+          <div class="info-value">{{movie.professionKey | lowercase}}</div>
+        </div>
+
+        <div class="info-row">
+          <div class="info-title">Character:</div>
+          <div class="info-value">{{movie.description || '—'}}</div>
+        </div>
+
+        <div class="info-row">
+          <div class="info-title">Rating:</div>
+          <div class="info-value">{{movie.rating || '—'}}</div>
+        </div>
+
+        <div class="movie-name" [routerLink]="['/', 'movie-page', movie.filmId]">{{movie.nameEn || movie.nameRu}}</div>
+      </div>
+    </div>
+
+    <button [class.hidden]="page * moviesPerPage >= personInfo.films.length"
+            tuiIconButton
+            shape="rounded"
+            type="button"
+            size="l"
+            appearance="icon"
+            icon="tuiIconChevronRightLarge"
+            (click)="nextMoviesPart(personInfo.films.length)">
+    </button>
+  </div>
+</div>
+</ng-container>

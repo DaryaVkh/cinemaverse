@@ -1,0 +1,62 @@
+<header class="app-header">
+  <div class="nav-block">
+    <a class="app-logo" routerLink="/">CinemaVerse</a>
+    <a class="nav-item" [routerLink]="['..', 'movie-list']" [queryParams]="{type: movieTypeEnum.FILM}">Movies</a>
+    <a class="nav-item" [routerLink]="['..', 'movie-list']" [queryParams]="{type: movieTypeEnum.TV_SERIES}">Serials</a>
+    <a class="nav-item" [routerLink]="['..', 'movie-list']" [queryParams]="{type: movieTypeEnum.TV_SHOW}">Show</a>
+  </div>
+
+  <div class="right-block">
+    <div class="search-input-container">
+      <ng-container *ngIf="searchInputVisible">
+        <tui-input class="search-input"
+                   tuiTextfieldSize="m"
+                   [(ngModel)]="searchQuery"
+                   (keydown.enter)="searchFilms()">
+          Movie, serial or show
+          <input tuiTextfield type="text" placeholder="Type your search query"/>
+        </tui-input>
+        <button tuiIconButton
+                appearance="icon"
+                shape="rounded"
+                size="xs"
+                icon="tuiIconCloseLarge"
+                (click)="searchInputVisible = false">
+        </button>
+      </ng-container>
+      <button tuiIconButton
+              appearance="icon"
+              shape="rounded"
+              size="m"
+              icon="tuiIconSearchLarge"
+              (click)="searchClick()">
+      </button>
+    </div>
+
+    <button tuiIconButton
+            appearance="icon"
+            shape="rounded"
+            size="m"
+            icon="tuiIconFilterLarge"
+            (click)="openSidebar(true)"
+            (tuiActiveZoneChange)="openSidebar($event)">
+      <app-filters-sidebar *tuiSidebar="open; direction: 'right'; autoWidth: true" (close)="open = false">
+      </app-filters-sidebar>
+    </button>
+
+    <app-user-avatar *ngIf="user$ | async as user; else signIn" [user]="user"></app-user-avatar>
+
+    <ng-template #signIn>
+      <app-auth></app-auth>
+    </ng-template>
+  </div>
+</header>
+
+<main class="content-container">
+  <router-outlet></router-outlet>
+</main>
+
+<footer class="app-footer">
+  <span>2023, CinemaVerse</span>
+  <span>©CinemaVerse. All rights reserved</span>
+</footer>
