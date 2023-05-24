@@ -25,6 +25,6 @@ export class HomePageComponent {
   constructor(private readonly moviesService: MoviesService) {}
 
   public navigate(delta: number): void {
-    this.visiblePremierIndex = (this.visiblePremierIndex + 5 + delta) % 5;
+    this.visiblePremierIndex = (this.visiblePremierIndex + 10 + delta) % 10;
   }
 }
