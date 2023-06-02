@@ -1,6 +1,6 @@
 # Проект "CinemaVerse"
 
-## Курсовой проект на курсе Tinkoff Fintech School, Frontend, весна 2022
+## Курсовой проект на курсе Tinkoff Fintech School, Frontend, весна 2023
 Выполнила Вихлянцева Дарья Андреевна
 
 Ссылка на деплой фронтенда на Vercel:
